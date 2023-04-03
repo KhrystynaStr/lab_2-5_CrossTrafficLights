@@ -3,6 +3,8 @@ namespace TrafficLights
     public partial class Form1 : System.Windows.Forms.Form
     {
         private TrafficLights trafficLights;
+        private TrafficLights crossTrafficLights;
+        
 
         public Form1()
         {
@@ -11,7 +13,8 @@ namespace TrafficLights
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            trafficLights = new TrafficLights(lampsPanel.CreateGraphics());
+            trafficLights = new TrafficLights(lampsPanel.CreateGraphics(), 1);
+            crossTrafficLights = new TrafficLights(additionalPanel.CreateGraphics(), 3);
         }
 
         private void buttonExit_Click(object sender, EventArgs e)
@@ -29,6 +32,7 @@ namespace TrafficLights
         {
             timer.Enabled = false;
             trafficLights.ChangeLamp();
+            crossTrafficLights.ChangeLamp();
         }
 
         private void buttonOk_Click(object sender, EventArgs e)
@@ -56,6 +60,7 @@ namespace TrafficLights
         private void timer_Tick(object sender, EventArgs e)
         {
             trafficLights.ChangeLamp();
+            crossTrafficLights.ChangeLamp();
             timer.Interval = trafficLights.GetInterval();
         }
 
@@ -70,6 +75,28 @@ namespace TrafficLights
             trafficLights.SetInterval(box.TabIndex, GetPeeriod(box));
         }
 
+        private void additionalPanel_Paint(object sender, PaintEventArgs e)
+        {
+            crossTrafficLights.Draw();
+        }
 
+        private void nightCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (nightCheckBox.Checked)
+            {
+                trafficLights.IsNight = true;
+                crossTrafficLights.IsNight = true;
+                buttonAuto.Enabled = false;
+                buttonManual.Enabled = false;
+            }
+            else
+            {
+                trafficLights.IsNight = false;
+                crossTrafficLights.IsNight = false;
+                buttonAuto.Enabled = true;
+                buttonManual.Enabled = true;
+            }
+           
+        }
     }
 }

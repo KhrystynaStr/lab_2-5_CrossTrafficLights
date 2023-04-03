@@ -10,6 +10,8 @@ namespace TrafficLights
         private uint activeLamp;
         private Graphics graphics;
 
+        public bool IsNight { get; set; }
+
         public TrafficLights(Graphics gr, uint activeNo = 0)
         {
             graphics = gr;
@@ -23,13 +25,23 @@ namespace TrafficLights
             };
             lamps[3] = lamps[1];
             lamps[activeLamp].SwitchOn();
+            IsNight = false;
         }
 
         public void ChangeLamp()
         {
-            lamps[activeLamp].SwitchOff().Draw(graphics);
-            activeLamp = ++activeLamp % countOfLamps;
-            lamps[activeLamp].SwitchOn().Draw(graphics);
+            if (IsNight)
+            {
+                lamps[activeLamp].SwitchOff().Draw(graphics);
+                activeLamp = ++activeLamp % countOfLamps;
+                if (activeLamp == 1 || activeLamp == 3) lamps[activeLamp].SwitchOn().Draw(graphics);
+            }
+            else
+            {
+                lamps[activeLamp].SwitchOff().Draw(graphics);
+                activeLamp = ++activeLamp % countOfLamps;
+                lamps[activeLamp].SwitchOn().Draw(graphics);
+            }        
         }
 
         public void Draw()

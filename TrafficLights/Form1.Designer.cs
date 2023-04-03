@@ -42,6 +42,8 @@
             label1 = new Label();
             buttonExit = new Button();
             timer = new System.Windows.Forms.Timer(components);
+            additionalPanel = new Panel();
+            nightCheckBox = new CheckBox();
             periodGroupBox.SuspendLayout();
             SuspendLayout();
             // 
@@ -169,11 +171,33 @@
             // 
             timer.Tick += timer_Tick;
             // 
+            // additionalPanel
+            // 
+            additionalPanel.BorderStyle = BorderStyle.Fixed3D;
+            additionalPanel.Location = new Point(439, 12);
+            additionalPanel.Name = "additionalPanel";
+            additionalPanel.Size = new Size(192, 426);
+            additionalPanel.TabIndex = 5;
+            additionalPanel.Paint += additionalPanel_Paint;
+            // 
+            // nightCheckBox
+            // 
+            nightCheckBox.AutoSize = true;
+            nightCheckBox.Location = new Point(254, 369);
+            nightCheckBox.Name = "nightCheckBox";
+            nightCheckBox.Size = new Size(133, 24);
+            nightCheckBox.TabIndex = 6;
+            nightCheckBox.Text = "Нічний режим";
+            nightCheckBox.UseVisualStyleBackColor = true;
+            nightCheckBox.CheckedChanged += nightCheckBox_CheckedChanged;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(405, 450);
+            ClientSize = new Size(644, 450);
+            Controls.Add(nightCheckBox);
+            Controls.Add(additionalPanel);
             Controls.Add(buttonExit);
             Controls.Add(periodGroupBox);
             Controls.Add(buttonAuto);
@@ -185,6 +209,7 @@
             periodGroupBox.ResumeLayout(false);
             periodGroupBox.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -202,5 +227,7 @@
         private TextBox greenTextBox;
         private TextBox yellowTextBox;
         private TextBox redTextBox;
+        private Panel additionalPanel;
+        private CheckBox nightCheckBox;
     }
 }
